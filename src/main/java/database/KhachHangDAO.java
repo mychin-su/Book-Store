@@ -245,8 +245,54 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 		return ketQua;
 	}
 
+	public KhachHang selectByUsernameAndPassWord(KhachHang t) {
+		KhachHang ketQua = null;
+		try {
+			// Buoc 1: tao ket noi den CSDL
+			Connection con = JDBCUtil.getConnection();
+
+			// Buoc 2: tao ket noi den doi tuong statement
+			String sql = "SELECT * FROM KhachHang WHERE tenDangNhap=? and matKhau=?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, t.getTenDangNhap());
+			st.setString(2, t.getMatKhau());
+
+			// Buoc3: thuc thi cau lenh SQL
+			System.out.println();
+			ResultSet rs = st.executeQuery();
+
+			// Buoc4:
+			while (rs.next()) {
+				String maKhachHang = rs.getString("maKhachHang");
+				String tenDangNhap = rs.getString("tenDangNhap");
+				String matKhau = rs.getString("matKhau");
+				String hoVaTen = rs.getString("hoVaTen");
+				String gioiTinh = rs.getString("gioiTinh");
+				String diaChi = rs.getString("diaChi");
+				String diaChiNhanHang = rs.getString("diaChiNhanHang");
+				String diaChiMuaHang = rs.getString("diaChiMuaHang");
+				Date ngaySinh = rs.getDate("ngaySinh");
+				String soDienThoai = rs.getString("soDienThoai");
+				String email = rs.getString("email");
+				String dangKyNhanBangTin = rs.getString("dangKyNhanBangTin");
+				KhachHang kh = new KhachHang(maKhachHang, tenDangNhap, matKhau, hoVaTen, gioiTinh, diaChi,
+						diaChiNhanHang, diaChiMuaHang, ngaySinh, soDienThoai, email, dangKyNhanBangTin);
+				ketQua = kh;
+				break;
+			}
+			JDBCUtil.closeConnection(con);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ketQua;
+	}
+
 	public static void main(String[] args) {
 		KhachHangDAO khachHangDAO = new KhachHangDAO();
-		System.out.println(khachHangDAO.kiemTraTenDangNhap("thoai"));
+		KhachHang khachHang = new KhachHang();
+		khachHang.setTenDangNhap("thoai");
+		khachHang.setMatKhau("123");
+		KhachHang kh = khachHangDAO.selectByUsernameAndPassWord(khachHang);
+		System.out.println(kh.toString());
 	}
 }

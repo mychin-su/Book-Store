@@ -74,25 +74,40 @@ body {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
+
+.red {
+	color: red;
+}
 </style>
 <body>
+
+	<%
+	String baoLoi = request.getAttribute("baoLoi") + "";
+	baoLoi = baoLoi.equals("null") ? "" : baoLoi;
+	%>
 	<div>
-		<form class="form-signin">
-			<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-			<label for="inputEmail" class="sr-only">Email address</label> <input
-				type="email" id="inputEmail" class="form-control mb-3"
-				placeholder="Email address" required autofocus> <label
-				for="inputPassword" class="sr-only">Password</label> <input
-				type="password" id="inputPassword" class="form-control"
-				placeholder="Password" required>
+		<form class="form-signin" action="dang-nhap" method="Post">
+			<h1 class="h3 mb-3 font-weight-normal">Đăng nhập</h1>
+			<div class="text-center">
+				<span class="red"><%=baoLoi%></span>
+			</div>
+			<label for="tenDangNhap" class="sr-only">Tên đăng nhập</label> <input
+				type="text" id="tenDangNhap" class="form-control mb-3"
+				placeholder="Tên đăng nhập..." required autofocus name="tenDangNhap">
+			<label for="password" class="sr-only">Password</label> <input
+				type="password" id="password" class="form-control"
+				placeholder="Password" required name="matKhau">
 			<div class="checkbox mb-3">
 				<label> <input type="checkbox" value="remember-me">
-					Remember me
+					Ghi nhớ tài khoản này
 				</label>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
-				in</button>
-			<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Đăng
+				nhập</button>
+			<div class="mt-3">
+				<a href="dang_ky.jsp">Đăng kí tài khoản mới</a>
+			</div>
+			<p class="mt-5 mb-3 text-muted">&copy; 2017-2025</p>
 		</form>
 	</div>
 </body>
