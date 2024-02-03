@@ -1,0 +1,61 @@
+1/ - Sản phẩm: 
+	+ Mã sách 
+    + Tên sách 
+    + Tác giả 
+    + Năm xuất bản 
+    + Gia Nhap
+    + Gia Goc 
+    + Gia Ban
+    + Số lượng
+    + Thể loại 
+    + Ngôn ngữ 
+    + Mo Ta 
+  
+   - Tác giả: 
+   	  + Mã tác giả
+      + Họ và tên: 
+      + Ngày sinh 
+      + Tiểu sử 
+   
+    - Thể loại 
+     + Mã thể loại 
+     + Tên thể loại 
+     
+    - Khách hàng 
+     + Mã khách hàng 
+     + Tên đăng nhập
+     + Mật khẩu
+     + Gioi tính
+     + Họ và tên 
+     + Địa chỉ 
+     + Địa chỉ nhận hàng 
+     + Địa chỉ mua hàng  
+     + Ngày sinh 
+   	 + Số điện thoại 
+   	 + Email 
+     + Đăng kí nhận bản tin email 
+     
+     
+     - Đơn hàng: 
+     	+ Mã đơn hàng
+     	+ Khách hàng 
+     	+ Địa chỉ mua hàng 
+     	+ Địa chỉ nhận hàng 
+     	+ Trạng thái: mới tạo, đang xử ký, đang giao hàng, đang giao hàng thành công ...
+     	+ Trạng thái thang toán 
+     	+ Số tiền đã thanh toán 
+     	+ Số tiền còn thiếu 
+     
+     - Chi tiết đơn hàng: 
+     + Mã chi tiết đơn hàng
+     + Đơn hàng 
+     + Mã sách
+     + Số lượng 
+     + Gía bìa
+     + Giam giá 
+     + Gía bán 
+     + Tổng tiền 
+     + Thuế 
+ 
+ 
+  
