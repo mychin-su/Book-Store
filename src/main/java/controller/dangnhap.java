@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import database.KhachHangDAO;
 import model.KhachHang;
+import util.Encode;
 
 /**
  * Servlet implementation class dangnhap
@@ -46,7 +47,7 @@ public class dangnhap extends HttpServlet {
 			throws ServletException, IOException {
 		String tenDangNhap = request.getParameter("tenDangNhap");
 		String matKhau = request.getParameter("matKhau");
-
+		matKhau = Encode.toSHA1(matKhau);
 
 		KhachHang kh = new KhachHang();
 		kh.setTenDangNhap(tenDangNhap);

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.KhachHangDAO;
 import model.KhachHang;
+import util.Encode;
 
 /**
  * Servlet implementation class dangky
@@ -71,6 +72,8 @@ public class dangky extends HttpServlet {
 
 		if (!matKhau.equals(matKhauNhapLai)) {
 			baoLoi += "Mẫu khẩu không khớp.<br/>";
+		} else {
+			matKhau = Encode.toSHA1(matKhau);
 		}
 
 		request.setAttribute("baoLoi", baoLoi);
