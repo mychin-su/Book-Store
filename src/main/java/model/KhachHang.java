@@ -3,12 +3,13 @@ package model;
 import java.sql.Date;
 
 public class KhachHang {
+
 	private String maKhachHang;
 	private String tenDangNhap;
 	private String matKhau;
 	private String hoVaTen;
 	private String gioiTinh;
-	private String diaChi; 
+	private String diaChi;
 	private String diaChiNhanHang;
 	private String diaChiMuaHang;
 	private Date ngaySinh;
@@ -130,6 +131,14 @@ public class KhachHang {
 
 	public void setDangKyNhanBangTin(String dangKyNhanBangTin) {
 		this.dangKyNhanBangTin = dangKyNhanBangTin;
+	}
+
+	@Override
+	public String toString() {
+		return "KhachHang [maKhachHang=" + maKhachHang + ", tenDangNhap=" + tenDangNhap + ", matKhau=" + matKhau
+				+ ", hoVaTen=" + hoVaTen + ", gioiTinh=" + gioiTinh + ", diaChi=" + diaChi + ", diaChiNhanHang="
+				+ diaChiNhanHang + ", diaChiMuaHang=" + diaChiMuaHang + ", ngaySinh=" + ngaySinh + ", soDienThoai="
+				+ soDienThoai + ", email=" + email + ", dangKyNhanBangTin=" + dangKyNhanBangTin + "]";
 	}
 
 }

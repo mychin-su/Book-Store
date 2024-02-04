@@ -105,7 +105,7 @@ body {
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Đăng
 				nhập</button>
 			<div class="mt-3">
-				<a href="dang_ky.jsp">Đăng kí tài khoản mới</a>
+				<a href="dangky.jsp">Đăng kí tài khoản mới</a>
 			</div>
 			<p class="mt-5 mb-3 text-muted">&copy; 2017-2025</p>
 		</form>
