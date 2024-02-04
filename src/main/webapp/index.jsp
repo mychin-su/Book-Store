@@ -8,17 +8,13 @@
 <title>BookStore</title>
 <link rel="stylesheet" type="text/css" href="./css/style.css">
 <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-	crossorigin="anonymous">
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-	integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-	crossorigin="anonymous"></script>
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-	integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+	integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
 	crossorigin="anonymous"></script>
 </head>
 <body>
@@ -70,8 +66,20 @@
 				<%
 				} else {
 				%>
-				Xin chào <b><%=khachHang.getTenDangNhap()%></b> <a href="dang-xuat"
-					style="white-space: nowrap">Đăng xuất </a>
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0 bg-infor ">
+					<li class="nav-item dropdown dropstart"><a
+						class="nav-link dropdown-toggle" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false"> Tài khoản</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">Đơn hàng của tôi</a></li>
+							<li><a class="dropdown-item" href="#">Thông báo</a></li>
+							<li><a class="dropdown-item" href="#">Thay đổi thông tin</a></li>
+							<li><a class="dropdown-item" href="doimatkhau.jsp">Đổi
+									mật khẩu</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="dropdown-item" href="dang-xuat">Đăng xuất</a></li>
+						</ul></li>
+				</ul>
 				<%
 				}
 				%>

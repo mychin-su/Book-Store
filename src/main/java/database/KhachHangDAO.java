@@ -287,6 +287,34 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 		return ketQua;
 	}
 
+	public boolean changePassWord(KhachHang t) {
+		int ketQua = 0;
+		try {
+			// Buoc1: tao ket noi den CSDL
+			Connection con = JDBCUtil.getConnection();
+
+			// Buoc2: tao ra doi tuong statement
+			String sql = "UPDATE KhachHang " + " SET " + " matKhau=? " + " WHERE maKhachHang = ?";
+
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, t.getMatKhau());
+			st.setString(2, t.getMaKhachHang());
+
+			// Buoc3: thuc thi cau lengh SQL
+			System.out.println(sql);
+			ketQua = st.executeUpdate();
+
+			// Buoc4:
+			System.out.println("Ban da thuc thi: " + sql);
+			System.out.println("Co " + ketQua + " dong bi thay doi!");
+
+			JDBCUtil.closeConnection(con);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ketQua > 0;
+	}
+
 	public static void main(String[] args) {
 		KhachHangDAO khachHangDAO = new KhachHangDAO();
 		KhachHang khachHang = new KhachHang();
