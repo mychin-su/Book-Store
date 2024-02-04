@@ -62,7 +62,8 @@
 				}
 				if (khachHang == null) {
 				%>
-				<a class="btn btn-primary" href="dangnhap.jsp">Đăng nhập</a>
+				<a class="btn btn-primary" href="khachhang/dangnhap.jsp">Đăng
+					nhập</a>
 				<%
 				} else {
 				%>
@@ -73,12 +74,13 @@
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="#">Đơn hàng của tôi</a></li>
 							<li><a class="dropdown-item" href="#">Thông báo</a></li>
-							<li><a class="dropdown-item" href="thaydoithongtin.jsp">Thay
-									đổi thông tin</a></li>
-							<li><a class="dropdown-item" href="doimatkhau.jsp">Đổi
+							<li><a class="dropdown-item"
+								href="khachhang/thaydoithongtin.jsp">Thay đổi thông tin</a></li>
+							<li><a class="dropdown-item" href="khachhang/doimatkhau.jsp">Đổi
 									mật khẩu</a></li>
 							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" href="dang-xuat">Đăng xuất</a></li>
+							<li><a class="dropdown-item"
+								href="khach-hang?hanhDong=dang-xuat">Đăng xuất</a></li>
 						</ul></li>
 				</ul>
 				<%

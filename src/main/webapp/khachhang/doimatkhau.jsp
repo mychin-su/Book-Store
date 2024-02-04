@@ -19,6 +19,8 @@
 </head>
 <body>
 	<%
+	String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ request.getContextPath();
 	Object obj = session.getAttribute("khachHang"); // Kiểm tra trong session có còn trong phiên đăng nhập hy không thì mới cho đổi mật khẩu
 	KhachHang khachHang = null;
 	if (obj != null)
@@ -37,7 +39,8 @@
 		<h1>ĐỔI MẬT KHẨU</h1>
 		<span> <%=baoLoi%>
 		</span>
-		<form action="doi-mat-khau" method="Post">
+		<form action="<%=url%>/khach-hang" method="Post">
+			<input type="hidden" name="hanhDong" value="doi-mat-khau" />
 			<div class="form-group col-md-6">
 				<label for="tenDangNhap">Tên đăng nhập</label> <input type="text"
 					class="form-control" id="tenDangNhap" placeholder="User name..."

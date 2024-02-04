@@ -27,6 +27,9 @@
 </head>
 <body>
 	<%
+	String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ request.getContextPath();
+
 	String baoLoi = request.getAttribute("baoLoi") + "";
 	baoLoi = (baoLoi.equals("null") ? "" : baoLoi); // so sanh voi "null" vì hàng ở trên chúng ta đã cộng nó với ""
 
@@ -68,7 +71,8 @@
 			<%=baoLoi%>
 		</div>
 		<div class="red" id="baoLoi"></div>
-		<form class="form" action="do-register" method="Post">
+		<form class="form" action="<%=url%>/khach-hang" method="Post">
+			<input type="hidden" name="hanhDong" value="dang-ky" />
 			<div class="row">
 				<div class="col-md-6">
 					<h3>Tài khoản</h3>

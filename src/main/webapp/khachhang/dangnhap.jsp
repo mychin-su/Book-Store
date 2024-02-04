@@ -82,11 +82,14 @@ body {
 <body>
 
 	<%
+	String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ request.getContextPath();
 	String baoLoi = request.getAttribute("baoLoi") + "";
 	baoLoi = baoLoi.equals("null") ? "" : baoLoi;
 	%>
 	<div>
-		<form class="form-signin" action="dang-nhap" method="Post">
+		<form class="form-signin" action="<%=url%>/khach-hang" method="Post">
+			<input type="hidden" name="hanhDong" value="dang-nhap" />
 			<h1 class="h3 mb-3 font-weight-normal">Đăng nhập</h1>
 			<div class="text-center">
 				<span class="red"><%=baoLoi%></span>

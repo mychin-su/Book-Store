@@ -40,6 +40,8 @@
 	%>
 	<div class="container">
 		<%
+		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+				+ request.getContextPath();
 		String baoLoi = request.getAttribute("baoLoi") + "";
 		baoLoi = (baoLoi.equals("null")) ? "" : baoLoi;
 
@@ -73,7 +75,8 @@
 			<h1>THÔNG TIN TÀI KHOẢN</h1>
 		</div>
 		<div class="red" id="baoLoi"><%=baoLoi%></div>
-		<form class="form" action="thay-doi-thong-tin" method="Post">
+		<form class="form" action="<%=url%>/khach-hang" method="Post">
+			<input type="hidden" name="hanhDong" value="thay-doi-thong-tin" />
 			<div class="row">
 				<div class="col-md-6">
 					<h2>Thông Tin Khách Hàng</h2>
