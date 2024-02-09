@@ -26,6 +26,7 @@
 </style>
 </head>
 <body>
+	<jsp:include page="../header.jsp" />
 	<%
 	String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ request.getContextPath();
@@ -168,7 +169,7 @@
 							email</label> <input type="checkbox" class="form-check-input"
 							id="dongYNhanMail" name="dongYNhanMail"
 							<%=dongYNhanMail.equals("on") ? "checked='checked'" : ""%> />
-
+ 
 					</div>
 					<input class="btn btn-primary form-control" type="submit"
 						value="Đăng ký" name="submit" id="submit"
@@ -177,6 +178,7 @@
 			</div>
 		</form>
 	</div>
+	<jsp:include page="../footer.jsp" />
 </body>
 
 <script>

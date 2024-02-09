@@ -1,7 +1,10 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
@@ -12,8 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.RequestContext;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
 import database.KhachHangDAO;
 import model.KhachHang;
+import util.CreateRandomNumber;
+import util.Email;
 import util.Encode;
 
 /**
@@ -49,6 +59,10 @@ public class KhachHangController extends HttpServlet {
 			doimatkhau(request, response);
 		} else if (hanhDong.equals("thay-doi-thong-tin")) {
 			thaydoithongtin(request, response);
+		} else if (hanhDong.equals("xac-thuc")) {
+			xacThuc(request, response);
+		} else if (hanhDong.equals("thay-doi-anh")) {
+			thayDoiAnh(request, response);
 		}
 
 	}
@@ -65,14 +79,16 @@ public class KhachHangController extends HttpServlet {
 			KhachHangDAO khd = new KhachHangDAO();
 			KhachHang khachHang = khd.selectByUsernameAndPassWord(kh);
 			String url = "";
-			if (khachHang != null) {
+			if (khachHang != null && khachHang.isTrangThaiXacThuc() == true) {
+
 				HttpSession session = request.getSession();
 				session.setAttribute("khachHang", khachHang);
 				url = "/index.jsp";
 			} else {
-				request.setAttribute("baoLoi", "Tên đăng nhập hoặc mật khẩu không chính xác");
+				request.setAttribute("baoLoi", "Tên đăng nhập hoặc mật khẩu không chính xác hoặc chưa xác thực");
 				url = "/khachhang/dangnhap.jsp";
 			}
+			System.out.println(khachHang.isTrangThaiXacThuc());
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
 			rd.forward(request, response);
 		} catch (ServletException e) {
@@ -147,7 +163,29 @@ public class KhachHangController extends HttpServlet {
 				KhachHang kh = new KhachHang(maKhachHang, tenDangNhap, matKhau, hoVaTen, gioiTinh, diaChiKhachHang,
 						diaChiNhanHang, diaChiMuaHang, Date.valueOf(ngaySinh), dienThoai, email,
 						dongYNhanMail != null ? "YES" : "NO");
-				khachHangDAO.insert(kh);
+				if (khachHangDAO.insert(kh) > 0) {
+					// Day si xac thuc
+					String soNgauNhien = CreateRandomNumber.getSoNgauNhien();
+
+					// Quy dinh thoi gian hieu luc
+					Date todaysDate = new Date(new java.util.Date().getTime());
+					Calendar c = Calendar.getInstance();
+					c.setTime(todaysDate);
+					c.add(Calendar.DATE, 1); // thoi gian 1 ngay
+					Date thoiGianHieuLucXacThuc = new Date(c.getTimeInMillis()); // lay ra so giay trong 1 ngay
+
+					// Trang thai xac thuc = false
+					boolean trangThaiXacThuc = false;
+
+					kh.setMaXacThuc(soNgauNhien);
+					kh.setThoiGianHieuLucCuaMaXacThuc(thoiGianHieuLucXacThuc);
+					kh.setTrangThaiXacThuc(trangThaiXacThuc);
+
+					if (khachHangDAO.updateVerifyInfomation(kh) > 0) {
+//						 Gui email cho khach hang
+						Email.sendEmail(kh.getEmail(), "Xác thực tài khoản tại TITV.vn", getNoiDung(kh));
+					}
+				}
 				url = "/khachhang/thanhcong.jsp";
 			}
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
@@ -257,6 +295,110 @@ public class KhachHangController extends HttpServlet {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void xacThuc(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String maKhachHang = request.getParameter("maKhachHang");
+			String maXacThuc = request.getParameter("maXacThuc");
+
+			KhachHangDAO khachHangDAO = new KhachHangDAO();
+
+			KhachHang kh = new KhachHang();
+			kh.setMaKhachHang(maKhachHang);
+			KhachHang khachHang = khachHangDAO.selectById(kh); // lay thong tin cua khach hang có thông tin đang xác
+																// thực
+
+			String msg = "";
+			if (khachHang != null) {
+				// Kiem tra ma xac thuc co giong nhau hay khong? // Kiem tra xem ma xac thuc con
+				// hieu luc hay khong?
+				if (khachHang.getMaXacThuc().equals(maXacThuc)) {
+					// Thanh Cong
+					khachHang.setTrangThaiXacThuc(true);
+					khachHangDAO.updateVerifyInfomation(khachHang);
+					msg = "Xác thực thành công!";
+
+				} else {
+					// That Bai
+					msg = "Xác thực không thành công!";
+				}
+			} else {
+				msg = "Tài khoản không tồn tại!";
+			}
+			System.out.println(msg);
+			String url = "/khachhang/thongbao.jsp";
+			request.setAttribute("baoLoi", msg);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
+			rd.forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static String getNoiDung(KhachHang kh) {
+		String link = "http://localhost:8080/JSP_Servlet_Built_App_Website_Online_/khach-hang?hanhDong=xac-thuc&maKhachHang="
+				+ kh.getMaKhachHang() + "&maXacThuc=" + kh.getMaXacThuc();
+		String noiDung = "<p>TOMCAT.vn xin ch&agrave;o bạn <strong>" + kh.getHoVaTen() + "</strong>,</p>\r\n"
+				+ "<p>Vui l&ograve;ng x&aacute;c thực t&agrave;i khoản của bạn bằng c&aacute;ch nhập m&atilde; <strong>"
+				+ kh.getMaXacThuc() + "</strong>, hoặc click trực tiếp v&agrave;o đường link sau đ&acirc;y:</p>\r\n"
+				+ "<p><a href=\"" + link + "\">" + link + "</a></p>\r\n"
+				+ "<p>Đ&acirc;y l&agrave; email tự động, vui l&ograve;ng kh&ocirc;ng phản hồi email n&agrave;y.</p>\r\n"
+				+ "<p>Tr&acirc;n trọng cảm ơn.</p>";
+		return noiDung;
+	}
+
+	private void thayDoiAnh(HttpServletRequest request, HttpServletResponse response) {
+		Object obj = request.getSession().getAttribute("khachHang");
+		KhachHang khachHang = null;
+		if (obj != null) {
+			khachHang = (KhachHang) obj;
+		}
+		if (khachHang != null) {
+			try {
+				String folder = getServletContext().getRealPath(getInitParameter("avatar"));
+				File file;
+				int maxFileSize = 5000 * 1024; // 5GB
+				int maxMeSize = 5000 * 1024; // 5GB
+
+				String contentType = request.getContentType();
+
+				if (contentType.indexOf(contentType) >= 0) {
+					DiskFileItemFactory factory = new DiskFileItemFactory();
+
+					// Quy dinh dung luong toi da cho 1 file
+					factory.setSizeThreshold(maxMeSize);
+
+					// Tao file upload
+					ServletFileUpload upload = new ServletFileUpload(factory);
+
+					upload.setSizeMax(maxFileSize);
+
+					List<FileItem> files = upload.parseRequest((RequestContext) request);
+
+					for (FileItem fileItem : files) {
+						// tem file
+						String fileName = System.currentTimeMillis() + fileItem.getName();
+						// duong dan
+						String path = folder + "\\" + fileName;
+						file = new File(path);
+
+						fileItem.write(file);
+
+						khachHang.setDuongDanAnh(fileName);
+						KhachHangDAO khachHangDAO = new KhachHangDAO();
+						khachHangDAO.update(khachHang);
+						khachHang = khachHangDAO.selectById(khachHang);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

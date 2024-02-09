@@ -27,6 +27,7 @@
 </style>
 </head>
 <body>
+	<jsp:include page="../header.jsp" />
 	<%
 	Object obj = session.getAttribute("khachHang");
 	KhachHang khachHang = null;
@@ -155,6 +156,7 @@
 	<%
 	}
 	%>
+	<jsp:include page="../footer.jsp" />
 </body>
 
 <script>

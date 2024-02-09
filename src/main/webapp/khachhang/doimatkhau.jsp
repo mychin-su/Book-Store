@@ -18,6 +18,7 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
+	<jsp:include page="../header.jsp" />
 	<%
 	String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ request.getContextPath();
@@ -67,6 +68,6 @@
 	<%
 	}
 	%>
-
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>

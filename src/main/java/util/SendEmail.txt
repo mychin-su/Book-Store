@@ -1,0 +1,15 @@
+Tình huống gửi email:
+ - Xác thực tài khoản khách hàng 
+ - Xác thực tài khoản trước khi thay đổi mật khẩu 
+ - Chúc mừng sinh nhật.
+ - Gioi thiệu sản phẩm mới 
+.....
+
+Phân tích: 
+ + Xác thực: 
+  -  Phản hồi 1 mã xác thực => Người dùng có thể nhập / nhấn vào link để xác thực
+  -  (Có/ Không) Quản lý thời gian hiệu lực của mã 
+  -  Đã xác thực hay chưa? 
+  
+  
+  

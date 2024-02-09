@@ -25,81 +25,35 @@ html, body {
 	height: 100%;
 }
 
-body {
-	display: -ms-flexbox;
-	display: -webkit-box;
-	display: flex;
-	-ms-flex-align: center;
-	-ms-flex-pack: center;
-	-webkit-box-align: center;
-	align-items: center;
-	-webkit-box-pack: center;
-	justify-content: center;
-	padding-top: 40px;
-	padding-bottom: 40px;
-	background-color: #f5f5f5;
-}
-
-.form-signin {
-	width: 100%;
-	max-width: 330px;
-	padding: 15px;
-	margin: 0 auto;
-}
-
-.form-signin .checkbox {
-	font-weight: 400;
-}
-
-.form-signin .form-control {
-	position: relative;
-	box-sizing: border-box;
-	height: auto;
-	padding: 10px;
-	font-size: 16px;
-}
-
-.form-signin .form-control:focus {
-	z-index: 2;
-}
-
-.form-signin input[type="email"] {
-	margin-bottom: -1px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-}
-
-.form-signin input[type="password"] {
-	margin-bottom: 10px;
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-}
-
 .red {
 	color: red;
 }
 </style>
 <body>
-
+	<jsp:include page="../header.jsp" />
 	<%
 	String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ request.getContextPath();
 	String baoLoi = request.getAttribute("baoLoi") + "";
 	baoLoi = baoLoi.equals("null") ? "" : baoLoi;
 	%>
-	<div>
+	<div class="container">
+
 		<form class="form-signin" action="<%=url%>/khach-hang" method="Post">
 			<input type="hidden" name="hanhDong" value="dang-nhap" />
 			<h1 class="h3 mb-3 font-weight-normal">Đăng nhập</h1>
 			<div class="text-center">
 				<span class="red"><%=baoLoi%></span>
 			</div>
-			<label for="tenDangNhap" class="sr-only">Tên đăng nhập</label> <input
-				type="text" id="tenDangNhap" class="form-control mb-3"
-				placeholder="Tên đăng nhập..." required autofocus name="tenDangNhap">
+			<div class="">
+				<label for="tenDangNhap" class="sr-only">Tên đăng nhập</label> <input
+					type="text" id="tenDangNhap" class="form-control mb-3"
+					placeholder="Tên đăng nhập..." required autofocus
+					name="tenDangNhap" style="width: 500px">
+			</div>
 			<label for="password" class="sr-only">Password</label> <input
 				type="password" id="password" class="form-control"
-				placeholder="Password" required name="matKhau">
+				placeholder="Password" required name="matKhau" style="width: 500px">
 			<div class="checkbox mb-3">
 				<label> <input type="checkbox" value="remember-me">
 					Ghi nhớ tài khoản này
@@ -113,5 +67,6 @@ body {
 			<p class="mt-5 mb-3 text-muted">&copy; 2017-2025</p>
 		</form>
 	</div>
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>

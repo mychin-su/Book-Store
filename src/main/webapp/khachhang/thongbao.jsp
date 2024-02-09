@@ -8,12 +8,13 @@
 </head>
 <body>
 	<jsp:include page="../header.jsp" />
-	<div class="container">Chúc mừng bạn đã đăng ký tài khoản thành
-		công! Vui lòng quay lại trang đăng nhập.</div>
+	<div class="container">
+		<%=request.getAttribute("baoLoi") + ""%>
+	</div>
 	<script>
 		setTimeout(function() {
 			window.location.href = 'index.jsp';
-		}, 5000);
+		}, 20000);
 	</script>
 	<jsp:include page="../footer.jsp" />
 </body>
